@@ -10,6 +10,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_BACKEND: ghcr.io/kriszta360/certificate-api
   IMAGE_FRONTEND: ghcr.io/kriszta360/certificate-frontend
+  IMAGE_MCP: ghcr.io/kriszta360/certificate-mcp
 
 jobs:
   build-and-push:
@@ -33,6 +34,12 @@ jobs:
 
       - name: Build backend
         run: dotnet build backend/certificate-api/certificate-api.csproj --no-restore
+
+      - name: Restore MCP
+        run: dotnet restore backend/certificate-mcp/certificate-mcp.csproj
+
+      - name: Build MCP
+        run: dotnet build backend/certificate-mcp/certificate-mcp.csproj --no-restore
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -76,3 +83,13 @@ jobs:
           tags: |
             ghcr.io/kriszta360/certificate-frontend:latest
             ghcr.io/kriszta360/certificate-frontend:${{ github.sha }}
+
+      - name: Build and push MCP image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./backend/certificate-mcp/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/kriszta360/certificate-mcp:latest
+            ghcr.io/kriszta360/certificate-mcp:${{ github.sha }}
