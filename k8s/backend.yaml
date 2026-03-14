@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: certificate-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: certificate-api
+  template:
+    metadata:
+      labels:
+        app: certificate-api
+    spec:
+      containers:
+        - name: certificate-api
+          image: ghcr.io/kriszta360/certificate-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MongoDb__ConnectionString
+              value: mongodb://mongo-mongodb:27017/certificates
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: certificate-api
+spec:
+  selector:
+    app: certificate-api
+  ports:
+    - port: 8080
+      targetPort: 8080

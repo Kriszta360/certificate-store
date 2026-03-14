@@ -57,26 +57,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata for backend image
-        id: meta-backend
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_BACKEND }}
-
-      - name: Extract metadata for frontend image
-        id: meta-frontend
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_FRONTEND }}
-
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./backend/certificate-api/Dockerfile
           push: true
-          tags: ${{ steps.meta-backend.outputs.tags }}
-          labels: ${{ steps.meta-backend.outputs.labels }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/certificate-api:latest
+            ghcr.io/${{ github.repository_owner }}/certificate-api:${{ github.sha }}
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v6
@@ -84,5 +73,6 @@ jobs:
           context: .
           file: ./certificate-frontend/Dockerfile
           push: true
-          tags: ${{ steps.meta-frontend.outputs.tags }}
-          labels: ${{ steps.meta-frontend.outputs.labels }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/certificate-frontend:latest
+            ghcr.io/${{ github.repository_owner }}/certificate-frontend:${{ github.sha }}
