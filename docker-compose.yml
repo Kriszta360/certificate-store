@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo:8.0
+    container_name: certificate-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build:
+      context: ./backend/certificate-api
+      dockerfile: Dockerfile
+    container_name: certificate-backend
+    ports:
+      - "5173:8080"
+    depends_on:
+      - mongodb
+
+  frontend:
+    build:
+      context: ./certificate-frontend
+      dockerfile: Dockerfile
+    container_name: certificate-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:

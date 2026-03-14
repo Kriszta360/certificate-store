@@ -1,0 +1,42 @@
+### GET all certificates
+GET http://localhost:5173/api/Certificate
+Accept: application/json
+
+
+### GET certificate by id
+GET http://localhost:5173/api/Certificate/1
+Accept: application/json
+
+
+### CREATE certificate
+POST http://localhost:5173/api/Certificate
+Content-Type: application/json
+
+{
+  "id": "2",
+  "ownerName": "Nagy Péter",
+  "email": "peter@example.com",
+  "type": "Azure",
+  "status": "Active",
+  "createdAt": "2026-03-13T10:00:00Z",
+  "validUntil": "2027-03-13T10:00:00Z"
+}
+
+
+### UPDATE certificate
+PUT http://localhost:5173/api/Certificate/2
+Content-Type: application/json
+
+{
+  "id": "2",
+  "ownerName": "Nagy Péter",
+  "email": "peter@example.com",
+  "type": "Azure",
+  "status": "Expired",
+  "createdAt": "2026-03-13T10:00:00Z",
+  "validUntil": "2027-03-13T10:00:00Z"
+}
+
+
+### DELETE certificate
+DELETE http://localhost:5173/api/Certificate/2
