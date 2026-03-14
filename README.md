@@ -124,7 +124,7 @@ The application provides the following functionality:
 
 # Author
 
-Krisztina Szécsényi
+Krisztina Szécsényi,
 Nándor Polyák
 
 Engineering Informatics
