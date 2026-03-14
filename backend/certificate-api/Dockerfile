@@ -1,18 +1,17 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-COPY ["certificate-api.csproj", "./"]
-RUN dotnet restore "certificate-api.csproj"
+COPY ["backend/certificate-api/certificate-api.csproj", "backend/certificate-api/"]
+RUN dotnet restore "backend/certificate-api/certificate-api.csproj"
 
 COPY . .
-RUN dotnet publish "certificate-api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+WORKDIR "/src/backend/certificate-api"
+RUN dotnet publish "certificate-api.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
+COPY --from=build /app/publish .
 
 EXPOSE 8080
 
-ENV ASPNETCORE_URLS=http://+:8080
-
-COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "certificate-api.dll"]

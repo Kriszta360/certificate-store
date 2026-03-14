@@ -1,10 +1,10 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
-COPY package*.json ./
+COPY ["certificate-frontend/package*.json", "./"]
 RUN npm install
 
-COPY . .
+COPY certificate-frontend/ .
 RUN npm run build
 
 FROM nginx:alpine
