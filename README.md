@@ -122,6 +122,43 @@ The application provides the following functionality:
 
 ---
 
+## CI/CD and GitOps Architecture
+
+```mermaid
+flowchart LR
+
+Developer[Developer]
+GitHubRepo[GitHub Repository]
+
+CI[GitHub Actions CI]
+DockerBuild[Docker Image Build]
+
+GHCR[GitHub Container Registry]
+
+ArgoCD[ArgoCD GitOps Controller]
+
+Kubernetes[Kubernetes Cluster]
+
+Frontend[Angular Frontend]
+Backend[ASP.NET API]
+MCP[MCP Service]
+MongoDB[(MongoDB Database)]
+
+Developer -->|push| GitHubRepo
+GitHubRepo --> CI
+CI --> DockerBuild
+DockerBuild --> GHCR
+
+GitHubRepo -->|k8s manifests| ArgoCD
+GHCR -->|pull images| Kubernetes
+ArgoCD -->|sync desired state| Kubernetes
+
+Kubernetes --> Frontend
+Kubernetes --> Backend
+Kubernetes --> MCP
+Backend --> MongoDB
+```
+
 # Author
 
 Krisztina Szécsényi,
