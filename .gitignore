@@ -1,0 +1,36 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# .NET build output
+**/bin/
+**/obj/
+
+# Node
+**/node_modules/
+npm-debug.log*
+
+# Angular build output
+**/dist/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+*.tar
+
+# Environment files
+.env
+.env.*
+
+# Coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
