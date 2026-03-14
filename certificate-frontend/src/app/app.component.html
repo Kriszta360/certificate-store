@@ -1,0 +1,218 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+  <h2>Tanúsítványok listája</h2>
+
+  <hr>
+
+  <h2>Új certificate hozzáadása</h2>
+
+  <form (ngSubmit)="addCertificate()" #certificateForm="ngForm">
+    <div>
+      <label for="id">ID</label><br>
+      <input
+        type="text"
+        id="id"
+        name="id"
+        [(ngModel)]="newCertificate.id"
+        required
+      >
+    </div>
+
+    <br>
+
+    <div>
+      <label for="ownerName">Tulajdonos neve</label><br>
+      <input
+        type="text"
+        id="ownerName"
+        name="ownerName"
+        [(ngModel)]="newCertificate.ownerName"
+        required
+      >
+    </div>
+
+    <br>
+
+    <div>
+      <label for="email">Email</label><br>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="newCertificate.email"
+        required
+      >
+    </div>
+
+    <br>
+
+    <div>
+      <label for="type">Típus</label><br>
+      <input
+        type="text"
+        id="type"
+        name="type"
+        [(ngModel)]="newCertificate.type"
+        required
+      >
+    </div>
+
+    <br>
+
+    <div>
+      <label for="status">Státusz</label><br>
+      <select
+        id="status"
+        name="status"
+        [(ngModel)]="newCertificate.status"
+        required
+      >
+        <option value="Active">Active</option>
+        <option value="Expired">Expired</option>
+        <option value="Pending">Pending</option>
+      </select>
+    </div>
+
+    <br>
+
+    <div>
+      <label for="validUntil">Érvényes eddig</label><br>
+      <input
+        type="date"
+        id="validUntil"
+        name="validUntil"
+        [(ngModel)]="newCertificate.validUntil"
+        required
+      >
+    </div>
+
+    <br>
+
+    <button type="submit">Add Certificate</button>
+  </form>
+
+  <hr>
+
+  <div *ngIf="editingCertificate">
+    <h2>Certificate módosítása</h2>
+
+    <form (ngSubmit)="updateCertificate()" #editCertificateForm="ngForm">
+      <div>
+        <label for="editId">ID</label><br>
+        <input
+          type="text"
+          id="editId"
+          name="editId"
+          [(ngModel)]="editingCertificate.id"
+          required
+          readonly
+        >
+      </div>
+
+      <br>
+
+      <div>
+        <label for="editOwnerName">Tulajdonos neve</label><br>
+        <input
+          type="text"
+          id="editOwnerName"
+          name="editOwnerName"
+          [(ngModel)]="editingCertificate.ownerName"
+          required
+        >
+      </div>
+
+      <br>
+
+      <div>
+        <label for="editEmail">Email</label><br>
+        <input
+          type="email"
+          id="editEmail"
+          name="editEmail"
+          [(ngModel)]="editingCertificate.email"
+          required
+        >
+      </div>
+
+      <br>
+
+      <div>
+        <label for="editType">Típus</label><br>
+        <input
+          type="text"
+          id="editType"
+          name="editType"
+          [(ngModel)]="editingCertificate.type"
+          required
+        >
+      </div>
+
+      <br>
+
+      <div>
+        <label for="editStatus">Státusz</label><br>
+        <select
+          id="editStatus"
+          name="editStatus"
+          [(ngModel)]="editingCertificate.status"
+          required
+        >
+          <option value="Active">Active</option>
+          <option value="Expired">Expired</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+
+      <br>
+
+      <div>
+        <label for="editValidUntil">Érvényes eddig</label><br>
+        <input
+          type="date"
+          id="editValidUntil"
+          name="editValidUntil"
+          [(ngModel)]="editingCertificate.validUntil"
+          required
+        >
+      </div>
+
+      <br>
+
+      <button type="submit">Mentés</button>
+      <button type="button" (click)="cancelEdit()">Mégse</button>
+    </form>
+
+    <hr>
+  </div>
+
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tulajdonos neve</th>
+        <th>Email</th>
+        <th>Típus</th>
+        <th>Státusz</th>
+        <th>Létrehozva</th>
+        <th>Érvényes eddig</th>
+        <th>Műveletek</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let certificate of certificates">
+        <td>{{ certificate.id }}</td>
+        <td>{{ certificate.ownerName }}</td>
+        <td>{{ certificate.email }}</td>
+        <td>{{ certificate.type }}</td>
+        <td>{{ certificate.status }}</td>
+        <td>{{ certificate.createdAt | date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>{{ certificate.validUntil | date:'yyyy-MM-dd' }}</td>
+        <td>
+          <button type="button" (click)="startEdit(certificate)">Edit</button>
+          <button type="button" (click)="deleteCertificate(certificate.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

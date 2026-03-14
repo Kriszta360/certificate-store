@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Certificate Store</h1>
+  <p>Tanúsítványok listája</p>
+
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <table *ngIf="certificates.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tulajdonos neve</th>
+        <th>Email</th>
+        <th>Típus</th>
+        <th>Státusz</th>
+        <th>Létrehozva</th>
+        <th>Érvényes eddig</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let certificate of certificates">
+        <td>{{ certificate.id }}</td>
+        <td>{{ certificate.ownerName }}</td>
+        <td>{{ certificate.email }}</td>
+        <td>{{ certificate.type }}</td>
+        <td>{{ certificate.status }}</td>
+        <td>{{ certificate.createdAt }}</td>
+        <td>{{ certificate.validUntil }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noData>
+    <p>Nincs megjeleníthető certificate adat.</p>
+  </ng-template>
+</div>
