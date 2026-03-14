@@ -1,0 +1,45 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore backend
+        run: dotnet restore backend/certificate-api/certificate-api.csproj
+
+      - name: Build backend
+        run: dotnet build backend/certificate-api/certificate-api.csproj --no-restore
+
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install frontend dependencies
+        working-directory: certificate-frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: certificate-frontend
+        run: npm run build
