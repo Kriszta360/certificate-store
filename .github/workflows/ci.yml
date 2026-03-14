@@ -8,8 +8,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_BACKEND: ghcr.io/${{ github.repository_owner }}/certificate-api
-  IMAGE_FRONTEND: ghcr.io/${{ github.repository_owner }}/certificate-frontend
+  IMAGE_BACKEND: ghcr.io/kriszta360/certificate-api
+  IMAGE_FRONTEND: ghcr.io/kriszta360/certificate-frontend
 
 jobs:
   build-and-push:
@@ -64,8 +64,8 @@ jobs:
           file: ./backend/certificate-api/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/certificate-api:latest
-            ghcr.io/${{ github.repository_owner }}/certificate-api:${{ github.sha }}
+            ghcr.io/kriszta360/certificate-api:latest
+            ghcr.io/kriszta360/certificate-api:${{ github.sha }}
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v6
@@ -74,5 +74,5 @@ jobs:
           file: ./certificate-frontend/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/certificate-frontend:latest
-            ghcr.io/${{ github.repository_owner }}/certificate-frontend:${{ github.sha }}
+            ghcr.io/kriszta360/certificate-frontend:latest
+            ghcr.io/kriszta360/certificate-frontend:${{ github.sha }}
